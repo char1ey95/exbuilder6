@@ -3,12 +3,12 @@
 ## 1. UI 프로젝트 구조 설명
 - 모든 작업은 src 폴더에서 이루어 진다.
 
-- clx-src
-|
-|- /theme
-|- /udc
-|- env.json
-|- language.json
+--- clx-src
+ |
+ |- /theme
+ |- /udc
+ |- env.json
+ |- language.json
 
 ### 1,1 theme
 
@@ -128,8 +128,142 @@
 
 ## 10. Model 뷰 데이터 셋 설명
 
-- 앱 속성: Assist에서 출판된 속성에 있는것을 나타내며, 보기만 가능하다.
-- 데이터 셋: 복수의 열과 행을 가지고 있는 데이터 컨트롤, 그리드 컨트롤과 가장 많이 사용되고, 목록형 컨트롤과 함께 사용한다.
-- 데이터 맵
-- 서브미션
+### 10.1 앱 속성
 
+- Assist에서 출판된 속성에 있는것을 나타내며, 보기만 가능하다.
+
+### 10.2 데이터 셋
+
+- 복수의 column과 row를 가진 `데이터 컨트롤`
+- 그리드 컨트롤과 가장 많이 사용된다.
+- 콤보박스, 트리와 같은 목록형 컨트롤들의 value를 나타낼때 사용한다.
+- cloumn, row를 탭을 클릭하여 추가하지만, 일반적으로 row는 추가할 일이 적다.
+
+#### 10.2.1 colunm
+
+- 컬럼의 `name`은 DB에서 가져오는 이름과 동일해야한다.(대소문자 구분)
+- 컬럼의 `dataType`은 `string`, `number`, `decimal`, `expression` 4가지가 존재한다.
+    - expression 타입일 경우에 expression 속성을 편집할 수 있다.
+    - expression 타입은 client에만 존재하는 column이다.(표, 제목)
+    - expression 속성 편집창에서 ctrl + space를 눌렀을경우 어시스트 창을 볼 수 있다.
+    - ex)expression을 추가한뒤 row 탭에서 추가할 경우 확인이 가능하다.
+- 컬럼의 `comment`는 스튜디오에서 확인할 수 있는 주석이다.
+- 컬럼의 `info`는 해당 컬럼에 대한 정보를 작성한다.
+- 열 탭의 Column Builder는 DB와 연동해서 SELECT문을 이용해 Column명을 가져올 수 있다.
+    - 직접 타이핑하면 번거롭다.
+
+![Alt text](image.png)
+
+- sortCondition 탭은 로드되는 데이터를 정렬하기 위해 사용한다.
+    - 정렬방법을 각각 지정할 수 있음
+         - ex) column2 asc
+         - ex) column2 desc
+- filterCondition에서 수식을 작성하여 필터링
+- comment는 주석을 작성할 수 있는 곳
+- info는 해당 데이터 셋의 정보를 작성 할 수 있는 곳.
+
+
+### 10.3 데이터 맵
+
+- 데이터 맵은 ctrl+enter로 생성할 수 있고 더블클릭시 편집창이 띄워진다.
+- 데이터 셋과 인터페이스가 비슷하며 기능도 같다.
+- 데이터 맵은 복수의 컬럼 && 각각 하나의 값만 가지고 있다.
+
+### 10.4 서브미션
+
+- ajax 통신을 속성창으로 만듬
+
+![Alt text](image-1.png)
+
+- 다음의 속성들을 각각 원하는 대로 설정하면된다.
+    - action: requestMapping 주소
+    - method: http 메서드
+    - mediaType: aplication/json과 같은 속성 (defalut form 데이터)
+    - responseType: 응답 타입
+    - fallbackContenteType: aplication/json과 같은 속성
+
+- 요청 데이터
+    - 클라이언트에서 어떤 데이터셋, 맵을 보낼지
+
+- 응답 데이터
+    - 서버에서 어떤 데이터셋, 맵을 보낼지
+
+데이터를 전송하기 위해서는 다음의 스크립트를 작성해야한다.
+반드시 send 메서드를 사용해야 전송을 할 수 있다.
+```js
+function onButtonClick(e){
+	var button = e.control;
+	
+	// 서브미션 객체 찾기
+	var sms = app.lookup("sms1");
+	
+	// 서브미션 전송
+	sms.send();
+}
+```
+
+## 11. Language 뷰
+
+- help => help contents => 국제화 검색후 사용가능
+
+## 12. Palette 뷰
+
+- 디자인탭에서 `ctrl + space`로 빠른 팔레트를 사용할 수 있다.
+
+<br >
+
+<br >
+
+<br >
+
+## 13. XY레이아웃
+
+## 14. 반응형 XY 레이아웃
+
+## 15. 폼 레이아웃
+
+- 아웃풋 컨트롤 궁금
+
+## 16. 버티컬 레이아웃
+
+- 위에서 아래로 배치되는 레이아웃
+
+## 17. 플로우 레이아웃
+
+- lineWrap 속성으로 개행 허용 여부를 설정
+-  
+
+## 18. Templates로 지정
+
+- 자주 사용하는 화면 배치는 Templates으로 설정하여 사용 가능
+- 레이아웃 선택 후 UI 템플릿으로 등록버튼 클릭
+
+![Alt text](image-2.png)
+
+- 글로벌 UI 등록시 다른 모든 프로젝트에서 템플릿 사용가능
+- 프로젝트 공유 UI로 등록시 현재 프로젝트에서 템플릿 사용가능
+
+- template 폴더에 eXBuilder6 파일을 만들었을 경우 해당 파일의 레이아웃을 다른 파일을 생성할 경우 사용할 수 있다.
+    - 자주 사용하는 레이아웃을 만들어두어 사용한다.
+
+
+## 19. 데이터 셋 바인딩
+
+- `바인딩`은 외부의 값을 가져와서 속성 또는 스타일에 갑을 연결해서 출력할 때 사용
+- 컨트롤 클릭 => 우클릭 => 바인딩 추가 항목을 선택 or Properties 뷰의 바인딩 탭 추가
+    - 초록색 아이콘은 바인딩 불가
+    - 파란색 아이콘은 바인딩 가능
+
+![Alt text](image-3.png)
+
+- 위의 바인딩 속성창은 타겟과 소스로 나뉜다.
+    - 타겟은 어느 속성에 넣을건지
+        - 속성(ex. placeholder)
+        - 스타일 속성(ex.value, color)
+        - 클래스
+    - 소스는 어디서 온것인지
+        - 데이터 셋 바인딩
+        - 데이터 맵 바인딩
+        - 앱 속성 바인딩
+        - 다국어 바인딩
+        
