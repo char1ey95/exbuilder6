@@ -22,7 +22,7 @@
 </listener>
 ```
 
-clx 패턴을 사용할 수 있게 url-pattern에 추가
+- clx 패턴을 사용할 수 있게 url-pattern에 추가
 
 ```xml
 <servlet-mapping>
